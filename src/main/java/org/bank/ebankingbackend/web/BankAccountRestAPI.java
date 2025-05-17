@@ -8,13 +8,10 @@ import org.bank.ebankingbackend.exceptions.BankAccountNotFoundException;
 import org.bank.ebankingbackend.exceptions.CustomernotFoundExeption;
 import org.bank.ebankingbackend.repositories.BankAccountRepository;
 import org.bank.ebankingbackend.services.BankAccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @RestController
 public class BankAccountRestAPI {
 
