@@ -212,5 +212,12 @@ public CustomerDTO getCustomer(Long customerId) throws CustomernotFoundExeption 
     accountHistoryDTO.setTotalPages(accountOperations.getTotalPages());
         return accountHistoryDTO;
     }
+
+    @Override
+    public List<CustomerDTO> searchCustomers(String keyword) {
+        List<Customer> customers= customerRepository.searchCustomer(keyword);
+        List<CustomerDTO> customerDTOS = customers.stream().map(cust->dtoMapper.fromCustomer(cust)).collect(Collectors.toList());
+        return customerDTOS;
+    }
 }
 
