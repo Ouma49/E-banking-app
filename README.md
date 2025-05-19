@@ -1,5 +1,21 @@
 # Plateforme Bancaire Digitale
 
+## Table des Matières
+
+- [Résumé](#résumé)
+- [Vue d'Ensemble du Système](#vue-densemble-du-système)
+- [Fonctionnalités Principales](#fonctionnalités-principales)
+- [Architecture du Système](#architecture-du-système)
+- [Stack Technologique](#stack-technologique)
+- [Prérequis Système](#prérequis-système)
+- [Guide d'Implémentation](#guide-dimplémentation)
+- [Instructions de Déploiement](#instructions-de-déploiement)
+- [Documentation API](#documentation-api)
+- [Structure du Projet](#structure-du-projet)
+- [Annotations Spring Framework](#annotations-spring-framework)
+- [Guide de Développement](#guide-de-développement)
+- [Auteur](#auteur)
+
 [![Build Status](https://img.shields.io/github/workflow/status/yourusername/digital-banking/CI)](https://github.com/yourusername/digital-banking/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Java Version](https://img.shields.io/badge/java-17-orange.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
@@ -146,9 +162,11 @@ http://localhost:8085/swagger-ui.html
 
 ![Exemple de requête POST pour créer un utilisateur](src/assets/post.png)
 
-- `GET /api/v1/users/profile` - Point d'entrée du profil utilisateur
+- `GET /api/v1/users/profile` - Point d'entrée pour obtenir les détails du profil utilisateur (avec autorités)
   - Requête : token JWT
-  - Réponse : données du profil utilisateur
+  - Réponse : Détails de l'utilisateur et ses autorités
+
+![Exemple de réponse pour le profil utilisateur montrant les autorités](src/assets/authorities.png)
 
 - `GET /api/v1/users` - Point d'entrée pour lister les utilisateurs
   - Requête : (optionnel) paramètres de pagination/filtre
