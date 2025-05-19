@@ -146,9 +146,11 @@ http://localhost:8080/swagger-ui.html
 
 ![Exemple de requête POST pour créer un utilisateur](src/assets/post.png)
 
-- `GET /api/v1/users/profile` - Point d'entrée du profil utilisateur
+- `GET /api/v1/users/profile` - Point d'entrée pour obtenir les détails du profil utilisateur (avec autorités)
   - Requête : token JWT
-  - Réponse : données du profil utilisateur
+  - Réponse : Détails de l'utilisateur et ses autorités
+
+![Exemple de réponse pour le profil utilisateur montrant les autorités](src/assets/authorities.png)
 
 - `GET /api/v1/users` - Point d'entrée pour lister les utilisateurs
   - Requête : (optionnel) paramètres de pagination/filtre
