@@ -93,8 +93,8 @@ cd digital-banking
 ```properties
 # application.properties
 spring.datasource.url=jdbc:mysql://localhost:3306/digital_banking
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+spring.datasource.username=root
+spring.datasource.password=""
 ```
 
 ### Processus de Build
