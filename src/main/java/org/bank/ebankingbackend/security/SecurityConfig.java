@@ -24,8 +24,12 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.util.List;
 
 
 @Configuration
@@ -34,7 +38,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
 
     @Value("${jwt.secret}")
-    private String secretKey ;
+    private String secretKey;
 
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
@@ -42,7 +46,7 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("12345")).authorities("USER").build(),
-                User.withUsername("admin").password(passwordEncoder.encode("12345")).authorities("USER","ADMIN").build()
+                User.withUsername("admin").password(passwordEncoder.encode("12345")).authorities("USER", "ADMIN").build()
         );
     }
 
@@ -56,13 +60,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
-                .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(csrf->csrf.disable())
-                .authorizeHttpRequests(ar->ar.requestMatchers("/auth/login/**").permitAll())
-                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
-                       // .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
-                        .build();
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(ar -> ar.requestMatchers("/auth/login/**").permitAll())
+                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
+                // .httpBasic(Customizer.withDefaults())
+                .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
+                .build();
 
     }
 
@@ -73,8 +78,8 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey.getBytes()));
     }
 
-     @Bean
-     NimbusJwtDecoder jwtDecoder(){
+    @Bean
+    NimbusJwtDecoder jwtDecoder() {
 
         //String secretKey="1234567890123456789012345678901234567890123456789012345678901234";
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "RSA");
@@ -83,11 +88,27 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager( UserDetailsManager UserDetailsService) {
+    public AuthenticationManager authenticationManager(UserDetailsManager UserDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder( passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(UserDetailsService);
         return new ProviderManager(daoAuthenticationProvider);
 
+    }
+
+    //@Bean
+
+    CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.setExposedHeaders(List.of("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/", corsConfiguration);
+
+        return source;
     }
 }
