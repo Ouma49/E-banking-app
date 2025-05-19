@@ -15,7 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+
 public class CustomerRestController {
 
     private BankAccountService bankAccountService;
