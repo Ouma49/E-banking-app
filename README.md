@@ -115,14 +115,14 @@ mvn spring-boot:run
 docker build -t digital-banking .
 
 # Déploiement du conteneur
-docker run -p 8080:8080 digital-banking
+docker run -p 8085:8080 digital-banking
 ```
 
 ## Documentation API
 
 La documentation de l'API est accessible à :
 ```
-http://localhost:8080/swagger-ui.html
+http://localhost:8085/swagger-ui.html
 ```
 
 ![Vue d'ensemble de l'API via Swagger UI](src/assets/swagger.png)
